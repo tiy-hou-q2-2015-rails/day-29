@@ -1,0 +1,27 @@
+<h1>Quotables</h1>
+
+<p>Hi <%= @current_user.username %></p>
+<hr/>
+
+<h4>People You Follow</h4>
+
+<ul>
+  <% @current_user.following_users.each do |user| %>
+    <li><%= user.username %></li>
+  <% end %>
+</ul>
+
+<h4>Other People You might Find interesting</h4>
+
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= user.username %>
+      <% if @current_user.following? user %>
+        <%= link_to 'Unfollow', unfollow_path(id: user.id), method: :delete %>
+      <% else %>
+        <%= link_to "Follow this user", follow_path(id: user.id), method: :post %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
